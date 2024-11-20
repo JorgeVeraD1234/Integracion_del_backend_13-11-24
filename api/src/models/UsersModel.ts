@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose'
+import { Schema, model } from "mongoose";
 
 interface IUser {
     userId: Schema.Types.ObjectId | string,
@@ -7,7 +7,7 @@ interface IUser {
     email: string,
     password: string,
     rol: "administrator" | "client"
-}
+};
 
 const UserSchema = new Schema<IUser>({
     
@@ -45,17 +45,4 @@ const UserSchema = new Schema<IUser>({
 
 });
 
-export const UserModel = model("users", UserSchema)
-
-
-
-
-
-
-
-
-
-
-
-
-
+export const UserModel = model("users", UserSchema);

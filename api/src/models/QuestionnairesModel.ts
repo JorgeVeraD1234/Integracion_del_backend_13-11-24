@@ -5,13 +5,13 @@ interface IQuestionnaire {
     title: string,
     description: string,
     userId: Schema.Types.ObjectId | string;
-}; 
+};
 
 const questionnaireSchema = new Schema<IQuestionnaire>({
 
     questionnaireId: {
         type: Schema.Types.ObjectId,
-        ref: "questionnaire",
+        ref: "questionnaires",
         required: true
     },
 
@@ -33,4 +33,4 @@ const questionnaireSchema = new Schema<IQuestionnaire>({
 
 });
 
-export const QuestionnaireModel = model("questionnaire", questionnaireSchema)
+export const QuestionnaireModel = model("questionnaires", questionnaireSchema);

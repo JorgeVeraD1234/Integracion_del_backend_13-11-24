@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose"
+import { Schema, model } from "mongoose";
 
 interface IQuestion {
     questionId: Schema.Types.ObjectId | string,
@@ -6,7 +6,7 @@ interface IQuestion {
     type: "radio" | "checkbox" | "select" | "text",
     isMandatory: boolean,
     questionnaireId: Schema.Types.ObjectId | string
-}
+};
 
 const QuestionSchema = new Schema<IQuestion>({
     
@@ -39,26 +39,4 @@ const QuestionSchema = new Schema<IQuestion>({
 
 });
 
-export const QuestionModel = model("questions", QuestionSchema)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+export const QuestionModel = model("questions", QuestionSchema);

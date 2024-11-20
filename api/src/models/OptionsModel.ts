@@ -1,10 +1,10 @@
-import { Schema, model } from 'mongoose'
+import { Schema, model } from "mongoose";
 
 interface IOption {
     optionId: Schema.Types.ObjectId | string,
     title: string,
     questionId: Schema.Types.ObjectId | string
-}
+};
 
 const OptionSchema = new Schema<IOption>({
     
@@ -25,8 +25,8 @@ const OptionSchema = new Schema<IOption>({
         required: true
     }
 
-})
+});
 
-export const OptionModel = model("options", OptionSchema)
+export const OptionModel = model("options", OptionSchema);
 
 
