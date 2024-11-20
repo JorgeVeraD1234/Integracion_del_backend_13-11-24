@@ -1,12 +1,12 @@
 import { Schema, model } from "mongoose";
 
-interface IAnwer {
+interface IAnswer {
     answer: string;
     questionnaireId: Schema.Types.ObjectId | string;
     questionId: Schema.Types.ObjectId | string;
 };
 
-const AnswerSchema = new Schema<IAnwer>({
+const AnswerSchema = new Schema<IAnswer>({
     answer: {
         type: String,
         required: true
