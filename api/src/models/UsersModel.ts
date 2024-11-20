@@ -1,13 +1,5 @@
 import { Schema, model } from "mongoose";
-
-interface IUser {
-    userId: Schema.Types.ObjectId | string,
-    name: string,
-    lastNames: string,
-    email: string,
-    password: string,
-    rol: "administrator" | "client"
-};
+import { IUser } from "../GlobalTypes";
 
 const UserSchema = new Schema<IUser>({
     

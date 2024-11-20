@@ -1,13 +1,13 @@
 import { Schema, model } from "mongoose";
 
-interface IQuestionnaire {
+interface IQuestionnaires {
     questionnaireId: Schema.Types.ObjectId | string,
     title: string,
     description: string,
     userId: Schema.Types.ObjectId | string;
 };
 
-const questionnaireSchema = new Schema<IQuestionnaire>({
+const questionnaireSchema = new Schema<IQuestionnaires>({
 
     questionnaireId: {
         type: Schema.Types.ObjectId,

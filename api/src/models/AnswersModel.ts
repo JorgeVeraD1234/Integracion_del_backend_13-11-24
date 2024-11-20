@@ -1,10 +1,7 @@
 import { Schema, model } from "mongoose";
+import { IAnswer } from "../GlobalTypes";
 
-interface IAnswer {
-    answer: string,
-    questionnaireId: Schema.Types.ObjectId | string,
-    questionId: Schema.Types.ObjectId | string
-};
+
 
 const AnswerSchema = new Schema<IAnswer>({
     answer: {
@@ -27,43 +24,3 @@ const AnswerSchema = new Schema<IAnswer>({
 });
 
 export const AnswerModel = model("answers", AnswerSchema);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
