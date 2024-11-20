@@ -1,9 +1,9 @@
 import { Schema, model } from "mongoose";
 
 interface IQuestionnaire {
-    questionnaireId: Schema.Types.ObjectId | string;
-    title: string;
-    description: string;
+    questionnaireId: Schema.Types.ObjectId | string,
+    title: string,
+    description: string,
     userId: Schema.Types.ObjectId | string;
 }; 
 

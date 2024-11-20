@@ -1,9 +1,9 @@
 import { Schema, model } from 'mongoose'
 
 interface IOption {
-    optionId: Schema.Types.ObjectId | string;
-    title: string;
-    questionId: Schema.Types.ObjectId | string;
+    optionId: Schema.Types.ObjectId | string,
+    title: string,
+    questionId: Schema.Types.ObjectId | string
 }
 
 const OptionSchema = new Schema<IOption>({
