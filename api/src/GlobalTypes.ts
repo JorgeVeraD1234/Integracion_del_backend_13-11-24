@@ -1,5 +1,11 @@
-import {Schema} from "mongoose"
+import { Schema } from "mongoose"
 
+export interface IQuestionnaires {
+    questionnaireId: Schema.Types.ObjectId | string,
+    title: string,
+    description: string,
+    userId: Schema.Types.ObjectId | string;
+};
 
 export interface IAnswer {
     answer: string,

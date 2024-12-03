@@ -1,11 +1,6 @@
 import { Schema, model } from "mongoose";
+import { IQuestionnaires } from "../GlobalTypes"
 
-interface IQuestionnaires {
-    questionnaireId: Schema.Types.ObjectId | string,
-    title: string,
-    description: string,
-    userId: Schema.Types.ObjectId | string;
-};
 
 const questionnaireSchema = new Schema<IQuestionnaires>({
 

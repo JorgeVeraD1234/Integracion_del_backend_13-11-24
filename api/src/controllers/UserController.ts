@@ -51,34 +51,26 @@ export const registerUsers = async (req: Request, res: Response): Promise<any> =
 }
 
 export const singIn = async (req: Request, res: Response): Promise<any> => {
+
     try {
 
-        //correo y contrasena
-        const email = req.body.email
-        const password = req.body.password
+        const user = await UserModel.findOne({ email: req.body.email, password: req.body.password })
 
-        //verificar que el ususario existe
-        const user = await UserModel.findOne({
-            email: req.body.email,
-            password: req.body.password
-        })
-
-        const token = jwt.sign(JSON.stringify(user), "Soso");
-        //si no existe devuelve un error
         if (!user) {
             return res.status(400).json({
-                msg: "Los datos ingresados son erroneos"
-            })
-        } else {
-            return res.status(200).json({ msg: "Si pudo ingresar", token })
+                msg: "No hay coincidencias en el sistema"
+            });
         }
-        //si existe devuelve un token
+
+        const token = jwt.sign(JSON.stringify(user), "pocoyo");
+        return res.status(200).json({ msg: "Sesion iniciada con exito", token, user });
 
     } catch (error) {
 
-        console.log(error)
-        return res.status(500).json({ msg: "Hubo un error al crear un usuario" })
-
+        console.log(error);
+        return res.status(500).json({
+            msg: "Hubo un error al iniciar sesion"
+        })
     }
-
 }
+
