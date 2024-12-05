@@ -1,41 +1,51 @@
 import { Request, Response } from "express";
+import { IQuestion, IQuestionnaires } from "../GlobalTypes";
+import { QuestionModel } from "../models/QuestionsModel";
 import { QuestionnaireModel } from "../models/QuestionnairesModel";
-
-export const addQuestionnaires = async (req: Request, res: Response): Promise<any> => {
-
+import { OptionModel } from "../models/OptionsModel";
+import { UserModel } from "../models/UsersModel";
+export const createQuizz = async (req: Request, res: Response): Promise<any> => {
     try {
-
-        //Primero validar que los datos que necesitamos existen!
-        const title = req.body.title
-        const description = req.body.description
-        const userId = req.body.userId
-        const IQuestion = req.body.IQuestion
-        const IOption = req.body.IOption
-        const IAnswer = req.body.IAnswer
-
-        //Validar que exista el usuario
-        if (!userId == true) {
-            return res.status(400).json({ msg: "No ta, ma..." })
+        const body = req.body;
+        if (!body.description || !body.title || !body.userId) {
+            res.status(400).json({ msg: "Faltan datos para crear un cuestionario" })
+        }
+        const questionnaire: IQuestionnaires = {
+            description: body.description,
+            title: body.title,
+            userId: body.userId,
+        }
+        let isInvalidQuestion = false;
+        for (const question of body.questions) {
+            if (!question.title || !question.type || typeof question.isMandatory == "undefined") {
+                isInvalidQuestion = true;
+            }
+            if (question.options.length <= 0 || !question.options[0] || question.options[0].length <= 0) {
+                isInvalidQuestion = true
+            }
+        }
+        if (isInvalidQuestion) {
+            return res.status(400).json({ msg: "Faltan datos para crear un cuestionario (en preguntas)" })
 
         }
-        //Validar que esten todos los datos
-        if (!title || !description || !IQuestion || !IOption || !IAnswer) {
-            return res.status(400).json({
-                msg: "Faltan datos para crear el cuestionario"
-            })
+        const createdQuestionnaire = await QuestionnaireModel.create(questionnaire);
+        for (const question of body.questions) {
+            const objQuestion = {
+                title: question.title,
+                type: question.type,
+                isMandatory: question.isMandatory,
+                questionnaireId: createdQuestionnaire._id
+            };
+            const createdQuestion = await QuestionModel.create(objQuestion);
+            for (const option of question.options) {
+                const objOption = {
+                    title: option,
+                    questionId: createdQuestion._id
+                }
+                await OptionModel.create(objOption);
+            }
         }
-
-        const cuestionario = await QuestionnaireModel.create({
-            title,
-            description,
-            IQuestion,
-            IOption,
-            IAnswer
-        })
-
-        console.log("prueba: ", { cuestionario })
-
-        return res.status(200).json({ msg: "Cuestionario creado con exito!", })
+        return res.status(200).json({ msg: "Cuestionario creado con exito" })
 
     } catch (error) {
         console.log(error);
@@ -44,22 +54,22 @@ export const addQuestionnaires = async (req: Request, res: Response): Promise<an
     }
 }
 
-
-export const accessToQuestionnaires = async (req: Request, res: Response): Promise<any> => {
+export const getMetrics = async (req: Request, res: Response): Promise<any> => {
     try {
-        const cuestionario = await QuestionnaireModel.findOne({ title: req.body.title })
-        if (!cuestionario) {
-            return res.status(400).json({
-                msg: "No se han encontrado coincidencias"
-            });
-        }
-
-        return res.status(200).json({ msg: "Se ingreso de forma correcta al cuestionario", cuestionario });
+        const numberOfUsers = await UserModel.find({ rol: "client" }).countDocuments();
+        const numberOfQuestionnaires = await QuestionnaireModel.find().countDocuments();
+        return res.status(200).json({ msg: "Datos obtenidos con exito", numberOfQuestionnaires, numberOfUsers })
     } catch (error) {
-        console.log(error);
-        return res.status(500).json({
-            msg: "Hubo un error al ingresar al cuestionario"
-        })
+        return res.status(500).json({ msg: "Ocurrio un error al obtener los datos" })
+    }
+}
 
+export const getQuestionnaires = async (req: Request, res: Response): Promise<any> => {
+    try {
+        const questionnaires = await QuestionnaireModel.find();
+        return res.status(200).json({ msg: "Cuestionarios obtenidos con exito", questionnaires })
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ msg: "Hubo un error al obtener los cuestionaios" })
     }
 }
