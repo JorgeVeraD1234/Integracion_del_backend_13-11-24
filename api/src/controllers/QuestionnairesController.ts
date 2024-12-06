@@ -1,14 +1,15 @@
 import { Request, Response } from "express";
-import { IQuestion, IQuestionnaires } from "../GlobalTypes";
+import { IQuestionnaires } from "../GlobalTypes";
 import { QuestionModel } from "../models/QuestionsModel";
 import { QuestionnaireModel } from "../models/QuestionnairesModel";
 import { OptionModel } from "../models/OptionsModel";
 import { UserModel } from "../models/UsersModel";
+import { AnswerModel } from "../models/AnswersModel";
 export const createQuizz = async (req: Request, res: Response): Promise<any> => {
     try {
         const body = req.body;
         if (!body.description || !body.title || !body.userId) {
-            res.status(400).json({ msg: "Faltan datos para crear un cuestionario" })
+            return res.status(400).json({ msg: "Faltan datos para crear un cuestionario" })
         }
         const questionnaire: IQuestionnaires = {
             description: body.description,
@@ -70,6 +71,6 @@ export const getQuestionnaires = async (req: Request, res: Response): Promise<an
         return res.status(200).json({ msg: "Cuestionarios obtenidos con exito", questionnaires })
     } catch (error) {
         console.log(error)
-        res.status(500).json({ msg: "Hubo un error al obtener los cuestionaios" })
+        return res.status(500).json({ msg: "Hubo un error al obtener los cuestionaios" })
     }
 }

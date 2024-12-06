@@ -1,25 +1,25 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Card, Col, Container, Dropdown, Form, Row } from 'react-bootstrap';
-import axios from 'axios';
+
 export const ListQuestionnaires = ({ rol }) => {
 
     const [questionnaires, setQuestionnaires] = useState([]);
 
     useEffect(() => {
-        const url = rol == "administrator" ? "/api/get-all-questionnaires" : "/api/get-questionnaires-by-user";
-        //axios.get(url) -> Devuelve un objeto "data";
+        getData()
     }, [])
-//crear el delete con metodo de delete y poner la funcion en el boton onClick
+
     const getData = async () => {
         try {
-            const [data] = await axios.get("http://localhost:4000/questionnaire/get-all");
-            setQuestionnaires(data.questionnaires)
+            const { data } = await axios.get("http://localhost:4000/questionnaires/get-all");
+            setQuestionnaires(data.questionnaires);
         } catch (error) {
             console.log(error)
-            alert("Ocurrio un error al obtener x")
-
+            alert("Hubo un error al obtener los cuestionarios")
         }
     }
+
     return (
         <Container>
             <Row>

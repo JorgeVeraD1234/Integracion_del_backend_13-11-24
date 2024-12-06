@@ -19,8 +19,8 @@ app.post("/users/create", registerUsers)
 app.post("/users/singIn", singIn)
 
 
-app.post("/users/create", createQuizz)
-app.get("/users/get-metrics", getMetrics)
+app.post("/questionnaire/create", createQuizz)
+app.get("/questionnaire/get-metrics", getMetrics)
 app.get("/questionnaires/get-all", getQuestionnaires)
 
 export default app;

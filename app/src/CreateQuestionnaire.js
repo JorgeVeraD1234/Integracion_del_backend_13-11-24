@@ -18,16 +18,14 @@ export const CreateQuestionnaire = () => {
         questions: [
             defaultQuestion
         ],
-        userId: JSON.parse(localStorage.user)._id
+        userId:JSON.parse(localStorage.user)._id
     });
-
     const onChangeTitle = (e) => {
         e.preventDefault();
         const data = createQuestionnaire;
         data.title = e.target.value;
         setCreateQuestionnaire({ ...data })
     };
-
     const onChangeBasicFields = (e, index) => {
         const data = createQuestionnaire;
         data.questions[index][e.target.name] = e.target.value;
@@ -35,17 +33,12 @@ export const CreateQuestionnaire = () => {
     }
     const addOption = (index) => {
         const data = createQuestionnaire;
-        data.questions[index].options.push(defaultQuestion)
+        data.questions[index].options.push(`Opcion ${data.questions[index].options.length + 1}`)
         setCreateQuestionnaire({ ...data })
     };
-
     const addQuestion = () => {
         const data = createQuestionnaire;
-        data.questions.push({
-            title: "Pregunta sin titulo",
-            type: "radio",
-            options: ["Opción 1"]
-        })
+        data.questions.push(defaultQuestion)
         setCreateQuestionnaire({ ...data })
     };
 
